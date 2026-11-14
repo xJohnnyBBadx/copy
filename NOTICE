@@ -1,0 +1,25 @@
+COPY
+Copyright 2026 COPY contributors
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+All text and code in this repository are original works of the COPY contributors.
+
+Acknowledgements (ideas and patterns, not copied text):
+- Impeccable (https://github.com/pbakaus/impeccable), Apache-2.0: architecture patterns
+  (single skill with on-demand command references, persistent context files, modes,
+  a deterministic detector kept apart from judgment, 0-4 heuristic scoring).
+- copyskills (https://github.com/srstomp/copyskills), MIT: critique-only stance and a
+  separate deterministic checker.
+- stop-slop (https://github.com/hardikpandya/stop-slop), MIT, and marketingskills
+  (https://github.com/coreyhaines31/marketingskills), MIT: pattern families and the
+  multi-pass editing idea, rewritten with calibration.
+- Harry Dry, Marketing Examples: the "visualize / falsify / nobody else" questions,
+  attributed and paraphrased.
+
+Quoted material:
+- Claude C. Hopkins, Scientific Advertising (1923), public domain in the United States.
+
+Referenced style guides:
+- Google developer documentation style guide, CC BY 4.0 (https://developers.google.com/style).
+- Microsoft Writing Style Guide (https://learn.microsoft.com/style-guide), principles only.

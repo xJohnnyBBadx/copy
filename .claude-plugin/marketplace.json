@@ -1,0 +1,20 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "copy",
+  "metadata": {
+    "description": "Editorial judgment for AI agents: critique, audit, humanize, polish, and brand voice."
+  },
+  "owner": {
+    "name": "COPY contributors"
+  },
+  "plugins": [
+    {
+      "name": "copy",
+      "description": "Editorial judgment for AI agents. 1 skill with critique, audit, humanize, polish, and voice commands.",
+      "version": "0.1.0",
+      "source": "./",
+      "category": "writing",
+      "tags": ["copywriting", "editing", "brand-voice", "critique", "skills"]
+    }
+  ]
+}
