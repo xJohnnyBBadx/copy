@@ -112,6 +112,7 @@ The fixtures cover generic AI marketing copy, strong but unconventional writing,
 - [docs/architecture.md](docs/architecture.md): design decisions and roadmap
 - [docs/commands.md](docs/commands.md): full command specification
 - [docs/testing.md](docs/testing.md): testing and validation strategy
+- [docs/eval-results.md](docs/eval-results.md): skill vs. baseline results so far
 
 ## Credits and license
 

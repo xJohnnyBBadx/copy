@@ -32,7 +32,7 @@ Do the passes in order. Strategy first, so that sentence-level noise doesn't cro
 
 7. **Name what works.** One to three specific strengths, quoted. These are the parts any revision must keep. This step is mandatory, even for weak pieces; it is how the critique protects the author from over-editing later.
 
-8. **Write the findings.** Highest impact first: P0, then P1, then P2. Merge findings that share a cause (twelve vague adjectives are one specificity finding, or a symptom of a positioning finding). Cap at about seven meaningful findings. Mention P3 preferences and Alternatives only when they serve the brief, and label them.
+8. **Write the findings.** Run every candidate through the severity tests in [rubric.md](rubric.md#severity-tests-apply-to-every-finding-before-reporting-it) first; most over-editing happens here, when an optional addition or a hunch about readers gets reported as a structural defect. Then order them: P0, then P1, then P2. Merge findings that share a cause (twelve vague adjectives are one specificity finding, or a symptom of a positioning finding). Cap at about seven meaningful findings. Mention P3 preferences and Alternatives only when they serve the brief, and label them.
 
 9. **Verdict and next step** per [rubric.md](rubric.md). Recommend the single highest-leverage change. Suggest a next command only when it fits: `polish` only when there are no P0 or P1 findings left; `voice create` when voice findings would benefit from a profile; a fresh `critique` after a strategic revision.
 
@@ -70,7 +70,9 @@ One or two lines naming patterns you deliberately left alone and why (e.g. "Frag
 
 ## When the piece works
 
-If the verdict is Ship, keep the report short: intent read, verdict, what works, at most three optional notes, scores, and "not flagged." Do not manufacture findings to fill the format. Saying "this works; change nothing" with reasons is a complete and useful critique.
+If the verdict is Ship, keep the report short: intent read, verdict, what works, at most three optional notes, scores, and "not flagged." Do not manufacture findings to fill the format.
+
+Before settling on Revise for a piece with no P0, re-read each P1 against the severity tests. If none survives, the verdict is Ship, and the former P1s become optional notes or are dropped. The failure this guards against: a well-made piece earns Revise because the reviewer found things it *could* add. Saying "this works; change nothing" with reasons is a complete and useful critique.
 
 ## Comparing versions
 

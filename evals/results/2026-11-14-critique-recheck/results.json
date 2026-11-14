@@ -1,0 +1,48 @@
+[
+  {
+    "fixture": "f15-unchanged-docs",
+    "category": "should-remain-unchanged",
+    "command": "critique",
+    "condition": "skill",
+    "ok": true,
+    "cost_usd": 0.9285680000000001,
+    "turns": 13,
+    "checks": {},
+    "judge": {
+      "verdict": "Ship",
+      "verdict_match": true,
+      "must_flag": {},
+      "false_positives": [],
+      "other_false_positives": [],
+      "invented_facts": [],
+      "usefulness": 4,
+      "voice_preservation": 4,
+      "notes": "Correctly ships the piece and explicitly protects everything the must-not list guards — the unquantified spam claim, the undefined DNS/CNAME terms, the final 'already sent' beat, and the step order — while declining a polish pass. The single P2 is a genuine off-by-one in the delegation sentence ('steps 3 and 4' hands off a step that happens inside the reader's own Ledgerly account), fixed in one phrase with the alternative intent noted, and the example edit matches the article's plain instructional register."
+    },
+    "judge_cost_usd": 0.193102
+  },
+  {
+    "fixture": "f04-strong-manifesto",
+    "category": "strong-unconventional",
+    "command": "critique",
+    "condition": "skill",
+    "ok": true,
+    "cost_usd": 0.8988575000000001,
+    "turns": 14,
+    "checks": {},
+    "judge": {
+      "verdict": "Ship",
+      "verdict_match": true,
+      "must_flag": {},
+      "false_positives": [],
+      "other_false_positives": [],
+      "invented_facts": [
+        "\"a 31-word period\" — the longest sentence in the piece is 27 words (\"Because a frame brazed... on a descent\"); no 31-word sentence exists"
+      ],
+      "usefulness": 4,
+      "voice_preservation": null,
+      "notes": "Correctly ships, names the specific lines carrying the piece, and pre-empts all four trap behaviors explicitly (fragments defended as cadence, the 'Not because' correction praised, no shortening, no CTA in the copy). The off-text 'next step' note edges toward the CTA prohibition but explicitly forbids adding one to the manifesto, and the only slip is a minor miscounted sentence-length figure."
+    },
+    "judge_cost_usd": 0.24146700000000001
+  }
+]

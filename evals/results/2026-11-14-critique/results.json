@@ -1,0 +1,295 @@
+[
+  {
+    "fixture": "f01-generic-saas-landing",
+    "category": "generic-ai",
+    "command": "critique",
+    "condition": "baseline",
+    "ok": true,
+    "cost_usd": 0.708004,
+    "turns": 2,
+    "checks": {},
+    "judge": {
+      "verdict": "Rethink",
+      "verdict_match": true,
+      "must_flag": {
+        "no-differentiation": true,
+        "hollow-proof": true,
+        "stock-vocab": true,
+        "reader-unclear": true
+      },
+      "false_positives": [],
+      "other_false_positives": [
+        "Craft notes claim 'three of them use the same not X, but Y turn' after correctly counting two instances earlier — a self-contradictory overcount"
+      ],
+      "invented_facts": [
+        "'the single most-used headline in B2B SaaS' — unsourced superlative stated as fact",
+        "'Migration cost, learning curve, and what happens to existing tools are the top three reasons a team lead doesn't switch' — unsourced buyer-behavior claim stated as fact"
+      ],
+      "usefulness": 4,
+      "voice_preservation": null,
+      "notes": "Catches all four required problems with specific line-level evidence, applies an explicit swap test, names the strategic (not cosmetic) fix, and correctly rules out length as the real issue; it suggests placeholders rather than inventing proof. Only blemishes are two unsourced category generalizations and an internal miscount of the 'not X, but Y' construction."
+    },
+    "judge_cost_usd": 0.67827
+  },
+  {
+    "fixture": "f01-generic-saas-landing",
+    "category": "generic-ai",
+    "command": "critique",
+    "condition": "skill",
+    "ok": true,
+    "cost_usd": 1.2502785,
+    "turns": 14,
+    "checks": {},
+    "judge": {
+      "verdict": "Rethink",
+      "verdict_match": true,
+      "must_flag": {
+        "no-differentiation": true,
+        "hollow-proof": true,
+        "stock-vocab": true,
+        "reader-unclear": true
+      },
+      "false_positives": [],
+      "other_false_positives": [],
+      "invented_facts": [],
+      "usefulness": 4,
+      "voice_preservation": null,
+      "notes": "Hits all four required problems with quoted evidence and correct prioritization (swap-test failure as the single highest-leverage fix), and uses [NEEDS: ...] placeholders instead of fabricating proof. Also shows senior judgment in what it leaves alone — keeps the three-bullet scaffold and plain register, rejects linter noise, and declines to recommend polish; word counts and stock-vocab tallies check out against the piece."
+    },
+    "judge_cost_usd": 0.3567905
+  },
+  {
+    "fixture": "f04-strong-manifesto",
+    "category": "strong-unconventional",
+    "command": "critique",
+    "condition": "skill",
+    "ok": true,
+    "cost_usd": 1.1356265,
+    "turns": 13,
+    "checks": {},
+    "judge": {
+      "verdict": "Revise",
+      "verdict_match": false,
+      "must_flag": {},
+      "false_positives": [],
+      "other_false_positives": [
+        "P1 demand to give 'Twelve frames a month. No more.' a baseline ('Twelve frames a month, between [N builders]') — loading a dependent clause onto the bare closing number destroys the emphatic one-breath cadence the review itself praises elsewhere; harmful advice for a manifesto",
+        "Escalates ¶3 ('Steel bends before it breaks, and it tells you first') to a P1 Critical positioning defect requiring author-supplied new evidence; at most a P3 preference on a ship-ready piece, and its zero-effort option A cuts a working sentence from a 137-word piece"
+      ],
+      "invented_facts": [],
+      "usefulness": 2,
+      "voice_preservation": 3,
+      "notes": "Craft is high — accurate intent read, precise 'what works', and an explicit 'Not flagged' section that correctly protects the fragments, the 'Not because…' correction, the bluntness, and the absent CTA — but it fails the central test of this piece by manufacturing two P1 findings and a Revise verdict where Ship was correct. The ¶3 note is defensible as a preference; the closing-number 'fix' would actively damage the piece, and its rewrites otherwise stay in the author's own terse register."
+    },
+    "judge_cost_usd": 0.38753550000000003
+  },
+  {
+    "fixture": "f04-strong-manifesto",
+    "category": "strong-unconventional",
+    "command": "critique",
+    "condition": "baseline",
+    "ok": true,
+    "cost_usd": 0.422134,
+    "turns": 2,
+    "checks": {},
+    "judge": {
+      "verdict": "Revise",
+      "verdict_match": false,
+      "must_flag": {},
+      "false_positives": [
+        "fragments",
+        "no-cta"
+      ],
+      "other_false_positives": [
+        "Claims the piece is otherwise 'scrupulous' about frame vs. bicycle, but line 7 says 'a bike for everyone' — the premise for the line-1 edit is false, and 'We build bicycle frames slowly' dulls the opening cadence for no gain",
+        "Treats 'Twelve frames a month' as a liability (possible 'production shop' read, future 'provable falsehood') when it is the piece's strongest credibility anchor; the hedge doesn't undo the doubt it plants"
+      ],
+      "invented_facts": [
+        "'commit four figures and a months-long wait' — the price point and wait length appear nowhere in the piece or brief",
+        "'an About page is read by someone... often on a first visit' and 'the most-read sentence on the page' presented as established facts about this page's traffic"
+      ],
+      "usefulness": 2,
+      "voice_preservation": 2,
+      "notes": "The 'what's load-bearing' section is genuinely excellent editorial judgment — it protects 'Not because slow is a virtue', the unround 'eleven', and the softer 'We'd like' — but the review then manufactures three fixes on a piece that should ship, and its lead recommendation is to cut 'Good.', the exact fragment the brief protects. It also raises the missing-logistics/'nowhere to go' gap, which is a CTA ask in all but name."
+    },
+    "judge_cost_usd": 0.3743405
+  },
+  {
+    "fixture": "f10-misleading-focus-app",
+    "category": "persuasive-misleading",
+    "command": "critique",
+    "condition": "baseline",
+    "ok": true,
+    "cost_usd": 0.3931915,
+    "turns": 2,
+    "checks": {},
+    "judge": {
+      "verdict": "Rethink",
+      "verdict_match": true,
+      "must_flag": {
+        "clinical-claim": true,
+        "guarantee": true,
+        "only-app": true,
+        "user-count": true,
+        "fake-scarcity": true,
+        "health-claim": true
+      },
+      "false_positives": [],
+      "other_false_positives": [
+        "Proposes replacement copy — 'Founding-member pricing, locked for as long as you stay subscribed' — that asserts a price-lock term the brief does not establish (the brief says only that the price has no end date), the same unsourced-promise error the review condemns elsewhere",
+        "States as fact that a fake countdown is 'a per-se deceptive practice in most jurisdictions' and that 'clinically proven' gets apps 'pulled from the App Store' — confident legal/platform assertions beyond what the review can know"
+      ],
+      "invented_facts": [
+        "Describes the paragraph beginning 'Join 2 million high performers' as '34-word' when it is 26 words",
+        "Attributes specific methodology gaps to the internal survey — 'no control group, no baseline measure, and survey respondents self-select toward engaged users' — as established fact rather than as questions to verify"
+      ],
+      "usefulness": 4,
+      "voice_preservation": null,
+      "notes": "Catches all six required integrity failures with line-level sourcing, correctly refuses to soften the false claims into hedged variants, adds the genuinely senior observation that the page never says what the product is, and flags the process question of where the 247% and the testimonial originated. Minor blemishes: a miscounted word total, over-stated legal certainty, and one suggested line that invents an offer term not in the brief."
+    },
+    "judge_cost_usd": 0.35385049999999996
+  },
+  {
+    "fixture": "f10-misleading-focus-app",
+    "category": "persuasive-misleading",
+    "command": "critique",
+    "condition": "skill",
+    "ok": true,
+    "cost_usd": 1.2418915000000001,
+    "turns": 15,
+    "checks": {},
+    "judge": {
+      "verdict": "Rethink",
+      "verdict_match": true,
+      "must_flag": {
+        "clinical-claim": true,
+        "guarantee": true,
+        "only-app": true,
+        "user-count": true,
+        "fake-scarcity": true,
+        "health-claim": true
+      },
+      "false_positives": [],
+      "other_false_positives": [],
+      "invented_facts": [
+        "Proposed testimonial pairing copy asserts \"Most users tell us the same thing in smaller words\" — the brief only reports 62% of 140 surveyed saying focus improved, and it conflates that with the novel-in-three-weeks outcome"
+      ],
+      "usefulness": 4,
+      "voice_preservation": 3,
+      "notes": "All six required problems are caught and correctly ranked as P0 integrity failures, with the verdict and the 'remove the clinical claim and the superlative has nothing to be the only one of' reasoning both right; it replaces false claims with [NEEDS: ...] placeholders and the real survey numbers rather than inventing evidence, and the 'Not flagged' section shows judgment about what to leave alone. Rewrites keep the author's short declarative register, though leading the proof slot with \"We haven't run a clinical trial\" and the \"Most users tell us the same thing\" line are slightly off-key."
+    },
+    "judge_cost_usd": 0.3699855
+  },
+  {
+    "fixture": "f15-unchanged-docs",
+    "category": "should-remain-unchanged",
+    "command": "critique",
+    "condition": "skill",
+    "ok": true,
+    "cost_usd": 1.1300320000000001,
+    "turns": 14,
+    "checks": {},
+    "judge": {
+      "verdict": "Revise",
+      "verdict_match": false,
+      "must_flag": {},
+      "false_positives": [
+        "restructure"
+      ],
+      "other_false_positives": [
+        "Manufactures a self-contradiction between 'up to 48 hours' (intro) and 'wait an hour and try again' (step 4) — incremental retry advice inside a 48-hour window is not a contradiction, and the review docks the S3 claim-integrity score for it",
+        "Demands that 'Before you start' disqualify readers who don't own a domain (Gmail/Outlook senders) — scope creep for a 145-word help article explicitly titled 'Set up a custom sending domain' with 'Enter your domain' in step 2",
+        "Demands a terminal failure path and support route that the piece's scope does not require, inserting a [NEEDS:] placeholder into otherwise shippable copy",
+        "Assigns P1 severity to all three structural findings in an article that is publishable as is, inflating priority rather than ranking it"
+      ],
+      "invented_facts": [
+        "'most of the support tickets this article currently generates' — asserts the article is currently generating support tickets; nothing in the piece or brief says so",
+        "'For this reader population that is a meaningful share' — unsupported quantification of how many Ledgerly users lack a domain",
+        "'DNS providers differ on what goes in the host field — some append your domain automatically, so pasting the full name creates a doubled record' — external technical behaviour introduced as fact to justify the step 3 finding",
+        "'This is where DNS setups get abandoned, and where the ticket gets filed' — asserted as known behaviour with no basis in the piece or brief"
+      ],
+      "usefulness": 2,
+      "voice_preservation": 3,
+      "notes": "The review is well-crafted and explicitly protects the piece's claim discipline, plain language, and absence of persuasion — it dodges three of the four named traps — but it should have shipped the piece and instead invents three P1s, including a misread 48-hour 'contradiction' and a step-4 restructure the brief forbids. Its rewrite fragments stay close to the author's plain second-person voice, so the damage is in priority and verdict, not in tone."
+    },
+    "judge_cost_usd": 0.3873805
+  },
+  {
+    "fixture": "f15-unchanged-docs",
+    "category": "should-remain-unchanged",
+    "command": "critique",
+    "condition": "baseline",
+    "ok": true,
+    "cost_usd": 0.39551000000000003,
+    "turns": 2,
+    "checks": {},
+    "judge": {
+      "verdict": "Revise",
+      "verdict_match": false,
+      "must_flag": {},
+      "false_positives": [],
+      "other_false_positives": [
+        "Flags '## Steps' as an empty heading worth dropping — a standard help-centre convention that aids scanning and deep-linking; pure churn",
+        "Item 6 claims terminology 'drifts across three words for one thing' but names only two ('publish', 'spread'), which describe different events (DNS provider publishing vs. propagation) rather than inconsistent usage of one term",
+        "Suggests the title carry the symptom ('invoices going to spam') when a task-based imperative title is correct for a help-centre article",
+        "Item 9 ('about 15 minutes' assumes self-service) asks for a hedge the intro already covers with 'plus up to 48 hours for your DNS provider'",
+        "Treats the intro's 48-hour DNS window and step 4's one-hour retry interval as contradictory 'in tone' when they describe different things",
+        "Escalates three content additions to 'Major' on a piece that is publishable as written — the review never recognizes that nothing needs doing"
+      ],
+      "invented_facts": [
+        "'Many DNS control panels auto-append the domain to the host/name field, so pasting the value as shown produces billing.yourcompany.com.yourcompany.com' — invents a specific CNAME host value the piece never gives",
+        "'This is the most common cause of failed verification in this entire genre of setup' — unverifiable superlative asserted as fact",
+        "'The web person who manages the reader's DNS almost certainly has no Ledgerly login' — nothing in the piece or brief says Ledgerly lacks team access, and the credential-sharing implication follows only from this assumption"
+      ],
+      "usefulness": 2,
+      "voice_preservation": 3,
+      "notes": "The review avoids all four named traps and praises the piece's real strengths at length, but then manufactures three 'Major' gaps on an article the editor judged shippable, padding with heading nits, a miscounted 'terminology drift', and a title rewrite that fights help-centre convention. Its best observations (step 4's delegation mismatch, 'enter your domain' vs. the email-address example) are plausible but are propped up with invented domain claims stated as fact."
+    },
+    "judge_cost_usd": 0.3987655
+  },
+  {
+    "fixture": "f19-strong-longform",
+    "category": "strong-unconventional",
+    "command": "critique",
+    "condition": "baseline",
+    "ok": true,
+    "cost_usd": 0.37545850000000003,
+    "turns": 2,
+    "checks": {},
+    "judge": {
+      "verdict": "Ship",
+      "verdict_match": true,
+      "must_flag": {},
+      "false_positives": [],
+      "other_false_positives": [],
+      "invented_facts": [],
+      "usefulness": 4,
+      "voice_preservation": 4
+    },
+    "judge_cost_usd": 0.3257805
+  },
+  {
+    "fixture": "f19-strong-longform",
+    "category": "strong-unconventional",
+    "command": "critique",
+    "condition": "skill",
+    "ok": true,
+    "cost_usd": 1.114725,
+    "turns": 13,
+    "checks": {},
+    "judge": {
+      "verdict": "Ship",
+      "verdict_match": true,
+      "must_flag": {},
+      "false_positives": [],
+      "other_false_positives": [],
+      "invented_facts": [
+        "\"The 58-word opening sentence\" — the opening sentence is ~53 words, so the count is stated as fact but inaccurate"
+      ],
+      "usefulness": 4,
+      "voice_preservation": 4,
+      "notes": "Correctly ships, names what makes the opening work with verbatim evidence, and explicitly protects the long sentence, em-dash aside and tense shift from a later pass; its only edit is a hedged, optional attribution note plus a genuinely apt fact-check list for reported long-form. Minor slip: the opening sentence is miscounted as 58 words."
+    },
+    "judge_cost_usd": 0.37237549999999997
+  }
+]

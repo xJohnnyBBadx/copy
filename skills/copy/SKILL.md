@@ -18,7 +18,7 @@ The measure of a run is not how much it rewrote. It is whether it found what mat
 2. **Diagnose before rewriting.** Name the problem, show the evidence, explain the cost. A rewrite without a diagnosis is a matter of taste.
 3. **Strategy before sentences.** If the promise is wrong or the reader is wrong, sentence edits are wasted. Find those problems first and say so first.
 4. **Context sets the standard.** Shorter, simpler, louder, or more conversion-oriented is not better by default. Each writing context weights the dimensions differently ([contexts.md](reference/contexts.md)).
-5. **Evidence or silence.** Every finding quotes the text it is about. Never invent audience research, performance data, conversion lifts, customer quotes, statistics, or proof for a claim. Where proof is needed, write a placeholder: `[NEEDS: number of customers, with source]`.
+5. **Evidence or silence.** Every finding quotes the text it is about. Never invent audience research, performance data, conversion lifts, customer quotes, statistics, or proof for a claim. Don't present guesses about reader behaviour ("people abandon here", "this causes support tickets") or outside facts as known; label them as assumptions or ask. Where proof is needed, write a placeholder: `[NEEDS: number of customers, with source]`.
 6. **Preserve the author.** Voice, deliberate rhythm, unusual word choices that work, and the author's register are assets. Rewrite in their voice, not yours.
 7. **Leave good work alone.** "This works; don't change it" is a valid and frequent result. Reporting fewer findings is better than reporting weak ones.
 

@@ -140,7 +140,9 @@ def claude_bin():
 
 
 def run_claude(prompt, cwd, extra, model=None, timeout=900):
-    cmd = [claude_bin(), "-p", "--output-format", "json"] + extra
+    # --strict-mcp-config with no --mcp-config loads no MCP servers: evals need none,
+    # and the user's global servers would otherwise start once per run.
+    cmd = [claude_bin(), "-p", "--output-format", "json", "--strict-mcp-config"] + extra
     if model:
         cmd += ["--model", model]
     p = subprocess.run(cmd, input=prompt.encode("utf-8"), cwd=str(cwd), capture_output=True, timeout=timeout)
@@ -193,7 +195,7 @@ def deterministic(fx, command, output):
     if fx.get("brand"):
         sources.append((BRANDS / fx["brand"]).read_text(encoding="utf-8"))
     kept = {p: norm(p) in norm(revised) for p in fx.get("preserve", [])}
-    sim = difflib.SequenceMatcher(None, norm(fx["text"]), norm(revised)).ratio()
+    sim = difflib.SequenceMatcher(None, norm(fx["text"]), norm(revised), autojunk=False).ratio()
     floor = fx.get("polish_min_similarity")
     return {"revised_found": True, "similarity": round(sim, 3),
             "similarity_ok": (sim >= floor) if floor else None,

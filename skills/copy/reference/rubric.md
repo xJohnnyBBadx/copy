@@ -91,6 +91,13 @@ Originality and memorability. Fresh language, and at least one idea or line a re
 | **P3 · Preference** | Defensible either way. Mention only when it serves the brief. Never framed as an error. | Optional. |
 | **Alternative** | A creative option: a different headline, angle, or line. Labelled as an option, never as a correction. | Offer two or three at most. |
 
+### Severity tests (apply to every finding before reporting it)
+
+- **P0 / P1 test:** would a demanding editor hold publication for this? If the reader can still understand, believe, and act as intended without the fix, it is not P1.
+- **Additive test:** a suggestion to *add* something the piece doesn't contain (an extra section, a failure path, a qualifier for an edge case, a new proof point) is P3 or an Alternative unless the piece's stated scope requires it and its reader cannot complete the job without it. "It could also cover…" is never P1.
+- **Speculation test:** a finding that rests on an unstated assumption about readers ("users abandon here," "this generates support tickets," "most readers lack X") or on outside facts not in the piece or brief must say so ("If many readers…") and can't be above P2. Better: ask the author.
+- **Contradiction test:** before calling two statements inconsistent, check whether both can be true at once (a 48-hour window and "retry in an hour" are compatible).
+
 Where a finding sits depends on its effect, not its type. One stock phrase in a strong piece is P3. The same phrase repeated across a homepage so that the brand sounds like everyone else is a symptom of an S2 problem and belongs under that finding.
 
 ## Verdict

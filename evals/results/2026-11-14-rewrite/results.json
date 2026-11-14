@@ -1,0 +1,136 @@
+[
+  {
+    "fixture": "f15-unchanged-docs",
+    "category": "should-remain-unchanged",
+    "command": "polish",
+    "condition": "baseline",
+    "ok": true,
+    "cost_usd": 0.545105,
+    "turns": 2,
+    "checks": {
+      "revised_found": true,
+      "similarity": 0.996,
+      "similarity_ok": true,
+      "preserved": {
+        "Invoices you've already sent are not affected.": true,
+        "If someone else manages your website, ask them to do steps 3 and 4.": false
+      },
+      "new_numbers": []
+    },
+    "judge": {
+      "verdict": "Ship",
+      "verdict_match": true,
+      "must_flag": {},
+      "false_positives": [],
+      "other_false_positives": [],
+      "invented_facts": [],
+      "usefulness": 4,
+      "voice_preservation": 4,
+      "notes": "Correctly ships the piece and explicitly declines every trap (passive reassurance, 'Ledgerly' repetition, 'spread' vs 'propagate', step restructuring, persuasion-padding), with a clear 'left alone' ledger. Its single edit — narrowing the handoff from 'steps 3 and 4' to 'step 3' because step 4 needs Ledgerly access rather than DNS access — is a defensible accuracy catch, hedged with an explicit revert instruction, and the revision is otherwise byte-identical to the author's draft."
+    },
+    "judge_cost_usd": 0.470165
+  },
+  {
+    "fixture": "f15-unchanged-docs",
+    "category": "should-remain-unchanged",
+    "command": "polish",
+    "condition": "skill",
+    "ok": true,
+    "cost_usd": 1.060661,
+    "turns": 15,
+    "checks": {
+      "revised_found": true,
+      "similarity": 1.0,
+      "similarity_ok": true,
+      "preserved": {
+        "Invoices you've already sent are not affected.": true,
+        "If someone else manages your website, ask them to do steps 3 and 4.": true
+      },
+      "new_numbers": []
+    },
+    "judge": {
+      "verdict": "Ship",
+      "verdict_match": true,
+      "must_flag": {},
+      "false_positives": [],
+      "other_false_positives": [],
+      "invented_facts": [],
+      "usefulness": 4,
+      "voice_preservation": 4,
+      "notes": "Correctly ships the piece unchanged, explicitly defends the passive closing, the 'Ledgerly' repetition and the plain-language 'spread' instead of flagging them, and adds no persuasion or restructuring. The one escalation — that step 4 is inside Ledgerly so a web developer asked to do 'steps 3 and 4' may lack access — is a genuine latent inconsistency, raised as an author's call rather than guessed at; only the claim that number styling 'follows one convention' is slightly loose given 'steps 3 and 4'."
+    },
+    "judge_cost_usd": 0.198982
+  },
+  {
+    "fixture": "f20-humanize-with-facts",
+    "category": "generic-ai",
+    "command": "humanize",
+    "condition": "baseline",
+    "ok": true,
+    "cost_usd": 0.162106,
+    "turns": 2,
+    "checks": {
+      "revised_found": true,
+      "similarity": 0.022,
+      "similarity_ok": null,
+      "preserved": {
+        "three years": true,
+        "five different places": true,
+        "email, photos, and bank feeds": false
+      },
+      "new_numbers": []
+    },
+    "judge": {
+      "verdict": "none",
+      "verdict_match": false,
+      "must_flag": {
+        "throat": true,
+        "reveal": true,
+        "comes-in": true
+      },
+      "false_positives": [],
+      "other_false_positives": [],
+      "invented_facts": [],
+      "usefulness": 3,
+      "voice_preservation": 3,
+      "notes": "The rewrite removes all three throat-clearing phrases, the 'That's where Ledgerly comes in' pivot, and the 'not just X, it's Y' reveal while keeping the IRS three-year guidance, the 'five different places' framing, and the email/photos/bank-feed trio — no invented statistics. Docked for giving no verdict or diagnosis at all, and for a sloppiness a senior editor would catch: it enumerates three locations and then asserts 'That's five different places.'"
+    },
+    "judge_cost_usd": 0.16060200000000002
+  },
+  {
+    "fixture": "f20-humanize-with-facts",
+    "category": "generic-ai",
+    "command": "humanize",
+    "condition": "skill",
+    "ok": true,
+    "cost_usd": 0.803174,
+    "turns": 12,
+    "checks": {
+      "revised_found": true,
+      "similarity": 0.006,
+      "similarity_ok": null,
+      "preserved": {
+        "three years": true,
+        "five different places": true,
+        "email, photos, and bank feeds": true
+      },
+      "new_numbers": []
+    },
+    "judge": {
+      "verdict": "Revise",
+      "verdict_match": true,
+      "must_flag": {
+        "throat": true,
+        "reveal": true,
+        "comes-in": true
+      },
+      "false_positives": [],
+      "other_false_positives": [],
+      "invented_facts": [],
+      "usefulness": 4,
+      "voice_preservation": 4,
+      "notes": "All three required tells are caught and fixed (throat-clearing in both the 'vocab' and 'throat' entries, the 'comes in' lead-in as 'agency', and the not-just/it's reveal), with every required fact preserved verbatim including the 'generally' hedge, the five-places line, and the three channels. The 'Left alone' section and the scoped claim flag on 'none of them go missing' are the kind of restraint and risk-spotting a strong senior editor shows; the replacement kicker is built only from facts already present, so nothing is invented."
+    },
+    "judge_cost_usd": 0.17252699999999999
+  }
+]
