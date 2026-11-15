@@ -89,6 +89,18 @@ python skills/copy/scripts/live.py homepage.md --context 3
 ```
 This opens a local page (127.0.0.1 only, with a per-run token) showing the file with every hit underlined, refreshed on each save. Select a passage, or click an underline, and ask for a critique, alternatives, a quieter or sharper version, or a humanize pass. Claude answers through the `claude` CLI using the skill's own rules, in about a minute. Apply a suggestion and it is written back to the file.
 
+**4. Inside your own app.** `tells.py` imports cleanly (standard library only), so a tool can run the linter on its own content and draw the results however it likes:
+```python
+import importlib.util
+spec = importlib.util.spec_from_file_location("tells", "skills/copy/scripts/tells.py")
+tells = importlib.util.module_from_spec(spec); spec.loader.exec_module(tells)
+avoid, allow = tells.brand_lists(open("BRAND.md", encoding="utf-8").read())
+result = tells.run("Our seamless platform is revolutionary.", context="10", avoid=avoid, allow=allow)
+for f in result["findings"]:          # family, match, note, start/end offsets into the text
+    print(f["family"], f["match"], f["start"], f["end"])
+```
+For a model's judgment on one passage, send the same JSON contract `live.py` uses (`ASK_TEMPLATE`: verdict, diagnosis, findings, labelled alternatives) to `claude -p` with `--add-dir` pointing at the skill. A video studio's script editor uses exactly this: a dashboard of hits per scene, questions per line, and a chosen alternative written back to the script only on Apply.
+
 ## Brand profiles
 
 Run `/copy voice create` with a few writing samples and some "sounds like us / doesn't" examples. COPY drafts a `BRAND.md` (schema: [skills/copy/templates/BRAND.md](skills/copy/templates/BRAND.md)) that turns adjectives into rules and **This, not that** pairs. Every command reads it.

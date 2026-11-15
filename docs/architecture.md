@@ -50,6 +50,7 @@ docs/                    this documentation
 | UI microcopy | Out of scope; defer to a UX-writing skill | Impeccable's `clarify` and similar skills cover it; COPY can critique it but says the other tool is better. |
 | License | Apache-2.0 | Matches Impeccable's lineage; patent grant; NOTICE file for attribution. |
 | Local tooling (2026-11-14, Luis chose hooks + live) | Plugin hooks: PostToolUse reports only an immediate tier (residue, brand-avoid, claim, attribution); Stop runs a once-per-session deep pass over touched files. `live.py` serves a token-protected 127.0.0.1 page with in-place underlines, passage questions via `claude -p`, and an exact single-occurrence apply. A `copy` CLI wrapper was not chosen; `tells.py` is the CLI. | Mirrors Impeccable's two-tier detector hook and live mode. Hooks are opt-in per project (BRAND.md or `.copy/`) because Markdown is everywhere in code repos. Stop feedback uses `decision: block` once, guarded by `stop_hook_active`, so it can't loop. |
+| Embedding (2026-11-14) | Other apps load `scripts/tells.py` from the installed skill (it is standard-library only and imports cleanly) and reuse `live.py`'s ask contract. COPY ships no SDK and nothing is vendored into the consumer. | The first consumer is a private video studio's per-project Copy dashboard (scenes, spoken lines, on-screen text). Loading the installed skill keeps one source of truth; a vendored copy would drift from the rules the skill applies. |
 
 ## Assumptions in the original specification, challenged
 
@@ -64,7 +65,7 @@ docs/                    this documentation
 
 **v0.1 (this release).** Core commands, rubric, 13 profiles, restraint, claims, calibrated tells, linter, BRAND.md schema, 20 fixtures, skill-vs-baseline runner.
 
-**v0.1.1 (2026-11-14).** Severity tests after the first eval; plugin hooks (per-edit immediate tier + end-of-turn deep pass); `live` preview page; BRAND.md vocabulary feeds the linter; `live` and `hooks` commands.
+**v0.1.1 (2026-11-14).** Severity tests after the first eval; plugin hooks (per-edit immediate tier + end-of-turn deep pass); `live` preview page; BRAND.md vocabulary feeds the linter; `live` and `hooks` commands. The linter is documented for embedding in other apps (README, "Inside your own app").
 
 **v0.2: directional commands**, each a reference file that reuses the rubric and restraint:
 - `quieter`: tone down hype and overclaiming (likely the most used; AI copy errs loud).
