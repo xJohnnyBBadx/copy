@@ -1,0 +1,29 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "PY=\"$(command -v python3 || command -v python)\"; [ -z \"$PY\" ] || [ ! -f \"${CLAUDE_PLUGIN_ROOT}/skills/copy/scripts/hook.py\" ] || \"$PY\" \"${CLAUDE_PLUGIN_ROOT}/skills/copy/scripts/hook.py\" post",
+            "timeout": 5,
+            "statusMessage": "Checking copy"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "PY=\"$(command -v python3 || command -v python)\"; [ -z \"$PY\" ] || [ ! -f \"${CLAUDE_PLUGIN_ROOT}/skills/copy/scripts/hook.py\" ] || \"$PY\" \"${CLAUDE_PLUGIN_ROOT}/skills/copy/scripts/hook.py\" stop",
+            "timeout": 30,
+            "statusMessage": "Copy deep pass"
+          }
+        ]
+      }
+    ]
+  }
+}

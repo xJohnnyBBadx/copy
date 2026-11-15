@@ -35,6 +35,8 @@ COPY is built around the opposite instincts:
 | `humanize` | Audit limited to robotic patterns, then applies only confirmed fixes. Refuses when the tells are covering for a missing idea. |
 | `polish` | Publication-ready pass with a minimal diff and a change log. Flags facts and claims for the author instead of changing them. |
 | `voice` | `voice create` builds a reusable `BRAND.md` profile from strategy, samples, and approved and rejected examples. `voice check` scores a piece against it. |
+| `live` | Local preview page: linter hits underlined in place, ask Claude about any passage, apply an alternative back to the file. |
+| `hooks` | Turn the automatic copy linter on or off for a project, or check its status. |
 
 Every finding follows one shape: **Problem → Evidence → Why it matters → Intervention → Example.** Severity runs P0 (strategic or integrity) → P1 (structural) → P2 (sentence) → P3 (preference), with subjective options labelled as *Alternatives*, never as corrections.
 
@@ -66,7 +68,26 @@ cp -r copy/skills/copy ~/.claude/skills/copy
 
 ### Requirements
 
-None for the skill itself. The optional linter (`skills/copy/scripts/tells.py`) needs Python 3.8+ and uses only the standard library. Without Python, the commands fall back to a manual scan and say so.
+None for the skill itself. The linter, hooks, and live preview need Python 3.8+ and use only the standard library. Without Python, the commands fall back to a manual scan and say so, and the hooks stay silent. Asking about a passage in the live preview also needs the `claude` CLI on PATH.
+
+## Run it locally
+
+Three ways to use COPY on your own machine, the same way Impeccable does for design:
+
+**1. The linter, by hand.** No AI, instant, Python standard library only:
+```bash
+python skills/copy/scripts/tells.py --context 3 --brand BRAND.md homepage.md
+python skills/copy/scripts/tells.py --json --context 12 docs/setup.md
+```
+`--context` is a profile number from [contexts.md](skills/copy/reference/contexts.md) (3 landing page, 2 manifesto, 12 technical, 13 long-form…). Exit code 2 means candidates were found. Every hit is a candidate, not a verdict.
+
+**2. Hooks, while Claude writes.** With the plugin installed, put a `BRAND.md` or an empty `.copy/` folder in a project (or run `/copy hooks on`). From then on, every time Claude edits a copy file, the linter runs and pushes unambiguous problems back to it straight away: chatbot residue, brand-banned words, claims to check, vague attribution. At the end of the turn, a deeper pass reports the remaining patterns once. Configuration: [reference/hooks.md](skills/copy/reference/hooks.md).
+
+**3. Live preview.** `/copy live homepage.md`, or directly:
+```bash
+python skills/copy/scripts/live.py homepage.md --context 3
+```
+This opens a local page (127.0.0.1 only, with a per-run token) showing the file with every hit underlined, refreshed on each save. Select a passage, or click an underline, and ask for a critique, alternatives, a quieter or sharper version, or a humanize pass. Claude answers through the `claude` CLI using the skill's own rules, in about a minute. Apply a suggestion and it is written back to the file.
 
 ## Brand profiles
 
@@ -83,17 +104,21 @@ An example profile lives at [evals/brands/dirt-road-coffee.md](evals/brands/dirt
 skills/copy/
 ├── SKILL.md                 philosophy, setup, intent read, routing, output contract, hard rules
 ├── reference/
-│   ├── critique.md audit.md polish.md voice.md     one file per command, loaded on demand
+│   ├── critique.md audit.md polish.md voice.md live.md hooks.md   one file per command, loaded on demand
 │   ├── rubric.md            9 dimensions × 0–4 anchors, severity, verdict rules
 │   ├── contexts.md          13 writing-context profiles: tiers, what good looks like, what not to flag
 │   ├── restraint.md         what never to change; read before any rewrite
 │   ├── claims.md            claim inventory, evidence ladder, misleading patterns
 │   ├── tells.md             AI and template patterns, each with "flag when / don't flag when"
 │   └── lenses.md            Ogilvy, Hopkins, Schwartz, Dry, plain-language and structure lenses
-├── scripts/tells.py         deterministic linter: evidence, not verdict
+├── scripts/
+│   ├── tells.py             deterministic linter: evidence, not verdict
+│   ├── hook.py              per-edit and end-of-turn hook runner
+│   └── live.py              local live-preview server and page
 └── templates/BRAND.md       brand voice profile schema
+hooks/hooks.json             plugin hooks (PostToolUse, Stop)
 evals/                       20 fixtures, an example brand, and a skill-vs-baseline runner
-tests/                       linter unit tests
+tests/                       linter, hook, and live-server unit tests
 docs/                        research audit, architecture, command spec, testing strategy
 ```
 
@@ -101,7 +126,7 @@ A request loads `SKILL.md`, one command file, and only the references that comma
 
 ## Testing
 
-- `python -m unittest discover -s tests` runs the linter tests.
+- `python -m unittest discover -s tests` runs the linter, hook, and live-server tests (33).
 - `python evals/run.py` runs every fixture through the skill and through baseline Claude, then grades both with a judge model against expectations a senior editor would hold: problems that must be found, false positives that must be avoided, phrases that must survive a polish, and facts that must not be invented. See [docs/testing.md](docs/testing.md).
 
 The fixtures cover generic AI marketing copy, strong but unconventional writing, technically accurate but unpersuasive writing, persuasive but misleading writing, overcomplicated writing, distinctive brand language, and copy that should stay unchanged.

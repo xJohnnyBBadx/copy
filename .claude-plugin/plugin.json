@@ -1,12 +1,18 @@
 {
   "name": "copy",
-  "description": "Editorial judgment for AI agents. 1 skill with critique, audit, humanize, polish, and voice commands: diagnoses before rewriting, checks claims, preserves the author's voice, and knows when to leave good writing alone.",
-  "version": "0.1.0",
+  "description": "Editorial judgment for AI agents. 1 skill with critique, audit, humanize, polish, voice, and live commands, plus hooks that lint copy as it is written.",
+  "version": "0.1.1",
   "author": {
     "name": "COPY contributors"
   },
   "repository": "https://github.com/xJohnnyBBadx/copy",
   "license": "Apache-2.0",
-  "keywords": ["copywriting", "editing", "brand-voice", "critique", "writing"],
+  "keywords": [
+    "copywriting",
+    "editing",
+    "brand-voice",
+    "critique",
+    "writing"
+  ],
   "skills": "./skills/"
 }

@@ -17,6 +17,9 @@ skills/copy/             the skill; this folder alone is the portable artifact
     critique.md audit.md polish.md voice.md       commands
     rubric.md contexts.md restraint.md claims.md tells.md lenses.md   shared knowledge
   scripts/tells.py       deterministic linter (evidence, not verdict)
+  scripts/hook.py        hook runner (PostToolUse immediate tier, Stop deep pass)
+  scripts/live.py        local live-preview server + page
+hooks/hooks.json         plugin hook wiring
   templates/BRAND.md     voice profile schema
 evals/                   fixtures, example brand, runner, results
 tests/                   linter unit tests
@@ -46,6 +49,7 @@ docs/                    this documentation
 | Portability | Agent Skills format only; no agent-specific adapters | The format is read by Claude Code, Codex, Cursor, OpenClaw, Hermes Agent and others. Adapters are maintenance without benefit. |
 | UI microcopy | Out of scope; defer to a UX-writing skill | Impeccable's `clarify` and similar skills cover it; COPY can critique it but says the other tool is better. |
 | License | Apache-2.0 | Matches Impeccable's lineage; patent grant; NOTICE file for attribution. |
+| Local tooling (2026-11-14, Luis chose hooks + live) | Plugin hooks: PostToolUse reports only an immediate tier (residue, brand-avoid, claim, attribution); Stop runs a once-per-session deep pass over touched files. `live.py` serves a token-protected 127.0.0.1 page with in-place underlines, passage questions via `claude -p`, and an exact single-occurrence apply. A `copy` CLI wrapper was not chosen; `tells.py` is the CLI. | Mirrors Impeccable's two-tier detector hook and live mode. Hooks are opt-in per project (BRAND.md or `.copy/`) because Markdown is everywhere in code repos. Stop feedback uses `decision: block` once, guarded by `stop_hook_active`, so it can't loop. |
 
 ## Assumptions in the original specification, challenged
 
@@ -59,6 +63,8 @@ docs/                    this documentation
 ## Roadmap
 
 **v0.1 (this release).** Core commands, rubric, 13 profiles, restraint, claims, calibrated tells, linter, BRAND.md schema, 20 fixtures, skill-vs-baseline runner.
+
+**v0.1.1 (2026-11-14).** Severity tests after the first eval; plugin hooks (per-edit immediate tier + end-of-turn deep pass); `live` preview page; BRAND.md vocabulary feeds the linter; `live` and `hooks` commands.
 
 **v0.2: directional commands**, each a reference file that reuses the rubric and restraint:
 - `quieter`: tone down hype and overclaiming (likely the most used; AI copy errs loud).

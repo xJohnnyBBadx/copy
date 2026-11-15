@@ -6,7 +6,8 @@ COPY's claim is that it judges writing better than an unaided model: it finds wh
 
 | Layer | What it checks | How |
 |---|---|---|
-| Linter unit tests | `tells.py` finds what it should, ignores literal and contextual uses, keeps strong fixtures quiet | `python -m unittest discover -s tests` |
+| Unit tests (33) | `tells.py` finds what it should, ignores literal and contextual uses, keeps strong fixtures quiet; `hook.py` opt-in, tiers, dedupe, Stop once, exclusions, never failing; `live.py` token check, offsets, apply, profile validation | `python -m unittest discover -s tests` |
+| Hook smoke test | Hooks fire in a real headless session | `claude -p --plugin-dir <repo>` in a folder with `.copy/`, ask it to write a generic file, check it reports the COPY linter feedback (verified 2026-11-14) |
 | Fixture evals | The skill's judgment on 20 pieces with known answers, against baseline Claude | `python evals/run.py` |
 | Results log | Past runs and what changed | [eval-results.md](eval-results.md) |
 | Human review | Whether the judge's grades match an editor's | Read `evals/results/<run>/*.out.md` alongside `summary.md` |

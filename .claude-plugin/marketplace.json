@@ -10,11 +10,17 @@
   "plugins": [
     {
       "name": "copy",
-      "description": "Editorial judgment for AI agents. 1 skill with critique, audit, humanize, polish, and voice commands.",
-      "version": "0.1.0",
+      "description": "Editorial judgment for AI agents. 1 skill with critique, audit, humanize, polish, voice, and live commands, plus hooks that lint copy as it is written.",
+      "version": "0.1.1",
       "source": "./",
       "category": "writing",
-      "tags": ["copywriting", "editing", "brand-voice", "critique", "skills"]
+      "tags": [
+        "copywriting",
+        "editing",
+        "brand-voice",
+        "critique",
+        "skills"
+      ]
     }
   ]
 }

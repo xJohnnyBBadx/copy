@@ -64,6 +64,27 @@ All findings use one shape: **Problem → Evidence (quoted) → Why it matters �
 | **Does not** | Invent positioning, proof, or audience research; reuse exemplar sentences verbatim unless listed as signature phrases. |
 | **Reference** | `reference/voice.md`, `templates/BRAND.md` |
 
+## live
+
+| | |
+|---|---|
+| **Purpose** | Local preview of one copy file: linter hits underlined in place, passage-level questions, apply-back. |
+| **Input** | A local file; optional profile (`--context`), brand profile (`--brand`), model (`--model`). |
+| **Process** | Start `scripts/live.py` in the background → give the user the tokenized 127.0.0.1 URL → stop it when work on the file ends. |
+| **Output** | A page. Passage questions return verdict (keep/change), diagnosis, findings, and labelled alternatives as JSON; Apply replaces the exact passage only if it occurs once. |
+| **Does not** | Bind beyond localhost; edit anything without an explicit Apply click; work on deployed URLs. |
+| **Reference** | `reference/live.md` |
+
+## hooks
+
+| | |
+|---|---|
+| **Purpose** | Run the linter automatically while an agent edits copy files. |
+| **Input** | `on`, `off`, or `status`; configuration in `.copy/config.json`. |
+| **Behaviour** | Opt-in per project (BRAND.md, `.copy/`, or config). Per edit: immediate tier only (residue, brand-avoid, claim, attribution). End of turn: full deep pass over touched files, once per session, deduplicated. |
+| **Does not** | Fire in projects that haven't opted in; fail the agent's turn on any error; repeat a finding in the same session. |
+| **Reference** | `reference/hooks.md` |
+
 ---
 
 ## Planned (v0.2)

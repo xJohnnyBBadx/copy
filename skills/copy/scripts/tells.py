@@ -180,8 +180,9 @@ SMALL_WORDS = {"a", "an", "the", "and", "or", "but", "of", "in", "on", "at", "to
 
 
 def normalize(text):
-    # HTML comments are not visible copy; blank them but keep line numbers.
-    text = re.sub(r"<!--.*?-->", lambda m: "\n" * m.group(0).count("\n"), text, flags=re.S)
+    # HTML comments are not visible copy. Blank them with spaces, keeping
+    # newlines, so line numbers and character offsets still match the source.
+    text = re.sub(r"<!--.*?-->", lambda m: re.sub(r"[^\n]", " ", m.group(0)), text, flags=re.S)
     return (text.replace("‘", "'").replace("’", "'")
                 .replace("“", '"').replace("”", '"'))
 
@@ -239,6 +240,8 @@ def scan_phrases(text, families, allow):
                     "match": matched,
                     "line": line,
                     "col": col,
+                    "start": m.start(),
+                    "end": m.end(),
                     "excerpt": excerpt(text, m.start(), m.end()),
                     "note": note,
                 })
@@ -266,7 +269,7 @@ def scan_metrics(text):
 
     def add(family, note, detail):
         findings.append({"family": family, "match": "", "line": None, "col": None,
-                         "excerpt": detail, "note": note})
+                         "start": None, "end": None, "excerpt": detail, "note": note})
 
     # Sentence-length uniformity.
     if len(lengths) >= 6 and statistics.mean(lengths) > 0:
@@ -335,6 +338,42 @@ def scan_metrics(text):
     return metrics, findings
 
 
+def brand_lists(brand_text):
+    """Read avoid/allow vocabulary from a BRAND.md.
+
+    Allow: first column of the "Use | Instead of" table and signature phrases.
+    Avoid: second column of that table, plus a "We never say:" line.
+    Returns (avoid, allow) lists of lowercase terms.
+    """
+    avoid, allow = [], []
+
+    def split(cell):
+        return [t.strip().strip('"“”*_`').strip().rstrip(".").lower() for t in cell.split(",") if t.strip()]
+
+    in_table = False
+    for raw in brand_text.splitlines():
+        line = raw.strip().lstrip("-").strip()
+        low = line.lower()
+        if low.startswith("|") and "instead of" in low:
+            in_table = True
+            continue
+        if in_table:
+            if not line.startswith("|"):
+                in_table = False
+            else:
+                cells = [c.strip() for c in line.strip("|").split("|")]
+                if len(cells) >= 2 and not set(cells[0]) <= set("-: "):
+                    allow += split(cells[0])
+                    avoid += split(cells[1])
+                continue
+        if "we never say" in low and ":" in line:
+            avoid += split(line.split(":", 1)[1].replace(".", ","))
+        if low.startswith("**signature phrases") and ":" in line:
+            allow += split(line.split(":", 1)[1].replace("**", ""))
+    avoid = [a for a in avoid if a and a not in allow and len(a) < 40]
+    return sorted(set(avoid)), sorted(set(a for a in allow if a))
+
+
 def run(text, context=None, avoid=None, allow=None):
     text = normalize(text)
     allow = [a.strip().lower() for a in (allow or []) if a.strip()]
@@ -400,7 +439,18 @@ def main(argv=None):
     ap.add_argument("--context", help="context profile number from reference/contexts.md (e.g. 3, 5a, 12)")
     ap.add_argument("--avoid", default="", help="comma-separated brand-banned words or phrases")
     ap.add_argument("--allow", default="", help="comma-separated brand vocabulary to ignore")
+    ap.add_argument("--brand", default="", help="path to a BRAND.md; adds its avoid/allow vocabulary")
     args = ap.parse_args(argv)
+    avoid_list = [a for a in args.avoid.split(",") if a.strip()]
+    allow_list = [a for a in args.allow.split(",") if a.strip()]
+    if args.brand:
+        try:
+            with open(args.brand, "r", encoding="utf-8", errors="replace") as fh:
+                b_avoid, b_allow = brand_lists(fh.read())
+            avoid_list += b_avoid
+            allow_list += b_allow
+        except OSError as exc:
+            sys.stderr.write("copy-tells: cannot read brand %s: %s\n" % (args.brand, exc))
 
     try:
         if args.path == "-":
@@ -412,9 +462,7 @@ def main(argv=None):
         sys.stderr.write("copy-tells: cannot read %s: %s\n" % (args.path, exc))
         return 1
 
-    result = run(data, context=args.context,
-                 avoid=args.avoid.split(",") if args.avoid else None,
-                 allow=args.allow.split(",") if args.allow else None)
+    result = run(data, context=args.context, avoid=avoid_list or None, allow=allow_list or None)
 
     out = json.dumps(result, indent=2, ensure_ascii=False) if args.json else render_text(result)
     try:

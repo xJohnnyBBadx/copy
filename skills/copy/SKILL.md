@@ -1,7 +1,7 @@
 ---
 name: copy
 description: "Use when the user wants existing writing evaluated or improved: critique, audit, humanize, polish, or brand-voice work on marketing copy, landing pages, headlines, taglines, ads, brand manifestos, positioning and messaging, investor or corporate communications, product marketing, social posts, video scripts, thought leadership, technical writing, or long-form editorial. Diagnoses before rewriting, checks claims, preserves the author's voice, and says so when the writing already works. Also creates and enforces a reusable brand voice profile (BRAND.md). Not for UI microcopy inside a product interface, and not for drafting copy from nothing."
-argument-hint: "[critique | audit | humanize | polish | voice] [target]"
+argument-hint: "[critique | audit | humanize | polish | voice | live | hooks] [target]"
 license: Apache-2.0
 user-invocable: true
 ---
@@ -48,6 +48,8 @@ The measure of a run is not how much it rewrote. It is whether it found what mat
 | `humanize [target]` | Alias: `audit` limited to robotic and AI patterns, then applies the confirmed fixes inside the restraint rules. | [reference/audit.md](reference/audit.md#humanize-mode) |
 | `polish [target]` | Publication-ready pass: corrections, consistency, real sentence-level friction. Minimal diff, explicit change log, flags what needs the author. | [reference/polish.md](reference/polish.md) |
 | `voice [create \| check] [target]` | Create or update a BRAND.md voice profile from strategy, samples, and approved and rejected examples; or check a piece against the profile. | [reference/voice.md](reference/voice.md) |
+| `live [file]` | Local preview page: linter hits underlined in place, ask about any passage, apply an alternative back to the file. | [reference/live.md](reference/live.md) |
+| `hooks [on \| off \| status]` | Manage the automatic linter that runs as copy files are edited (immediate tier per edit, deep pass at end of turn). | [reference/hooks.md](reference/hooks.md) |
 
 Shared references, loaded by the commands that need them: [rubric.md](reference/rubric.md) (dimensions, anchors, severity, verdict), [contexts.md](reference/contexts.md) (writing-context profiles), [restraint.md](reference/restraint.md) (what not to change), [claims.md](reference/claims.md) (claim integrity), [tells.md](reference/tells.md) (AI and cliché patterns with calibration), [lenses.md](reference/lenses.md) (Ogilvy, Hopkins, Schwartz, Dry, plain-language and structure lenses). The brand profile schema is [templates/BRAND.md](templates/BRAND.md).
 
@@ -55,6 +57,8 @@ Shared references, loaded by the commands that need them: [rubric.md](reference/
 
 - **No argument:** ask what they want looked at, then show the table with one line on which command fits which need. Never auto-run a command.
 - **Natural-language requests:** "review / feedback / is this good / what's wrong with this" → `critique`. "Check for clichés / AI tells / weak claims" → `audit`. "Make it sound human / less AI / less robotic" → `humanize`. "Final pass / tighten / ready to publish / proofread" → `polish`. "Brand voice / tone guide / does this sound like us" → `voice`.
+- "Show me / preview / highlight the problems in this file" → `live`. "Check copy automatically / turn the hook on" → `hooks`.
+- **Hook feedback arrives** (a "COPY linter" note after an edit or at end of turn): treat it as evidence per [reference/hooks.md](reference/hooks.md); confirm before fixing, and respect any instruction to keep text verbatim.
 - **Two commands fit:** ask once. When in doubt between critique and polish, critique first: polishing a strategically broken piece hides the problem.
 - **Planned, not yet built:** `distill`, `sharpen`, `bolder`, `quieter`, `position`, `structure`. If asked for one, say it is planned, then do the nearest honest thing: run `critique` with emphasis on the matching dimension (Distinctiveness for bolder/quieter, Positioning for position, Argument & hierarchy for structure and distill, Specificity for sharpen) and offer two or three labelled alternatives written under the restraint rules.
 - **UI microcopy** (buttons, errors, empty states inside a product): this skill can critique it, but a UX-writing skill is the better tool when one is installed. Say so once.
