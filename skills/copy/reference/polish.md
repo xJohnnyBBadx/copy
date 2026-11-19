@@ -17,11 +17,12 @@ The publication-ready pass. Fixes what is wrong and what causes real friction, m
 Work in this order; later passes must not undo earlier ones.
 
 1. **Correctness.** Spelling, grammar, agreement, punctuation errors, broken sentences, wrong words (affect/effect), duplicated words. Fix them.
-2. **Internal consistency.** The same fact stated two ways (a price, a date, a count) gets **flagged, not fixed**: you can't know which is right. Terminology, capitalization, hyphenation, numerals, serial comma, and spelling variant follow BRAND.md, or else the piece's dominant convention. Fix these.
+2. **Internal consistency.** The same fact stated two ways (a price, a date, a count) gets **flagged, not fixed**: you can't know which is right. Terminology, capitalization, hyphenation, numerals, serial comma, and spelling variant follow BRAND.md, or else the piece's dominant convention. Fix these. For decks, cards and sectioned pages, read each heading stack (eyebrow, title, subtitle) as one unit. No content word should repeat inside it (linter family `stack`).
 3. **Sentence-level friction.** Only real friction for this reader: ambiguous referents, sentences that need rereading, stacked clauses, buried verbs, redundancy (the same point twice). Each change must name its problem.
 4. **Confirmed tells.** Apply only tells confirmed against [tells.md](tells.md) and the profile. Run the linter if available (see [audit.md](audit.md)); confirm before acting.
 5. **Flow.** Transitions and paragraph breaks, lightly. Don't re-order sections; that is a structural change for `critique`.
 6. **Final read.** Read the result aloud in your head as the reader. Run the restraint self-check on every changed passage. Revert anything that is only different.
+7. **Re-run after later edits.** If any copy changes after this pass (a layout change that adds a heading, a renamed section, an author edit), run the linter again on the changed blocks before calling the piece done. A clean pass covers only the text it actually read.
 
 ## Never in polish
 

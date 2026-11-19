@@ -136,5 +136,52 @@ class Cli(unittest.TestCase):
         self.assertEqual(p.returncode, 0)
 
 
+class HeadingStacks(unittest.TestCase):
+    def test_repeat_across_eyebrow_title_subtitle(self):
+        r = tells.run("SCOPE / FEE / SCHEDULE\nScope, fee and schedule\nOne fixed fee for all six RFP deliverables.\n")
+        hits = [f for f in r["findings"] if f["family"] == "stack"]
+        self.assertEqual(len(hits), 1)
+        self.assertIn("scope", hits[0]["note"])
+        self.assertIn("fee", hits[0]["note"])
+
+    def test_boilerplate_eyebrow_prefix_not_flagged(self):
+        deck = "\n\n".join([
+            "ACME SYSTEMS / APPROACH\nOne system for three kits\nThe vehicle sits at the centre.",
+            "ACME SYSTEMS / COMMERCIALS\nScope, fee and schedule\nThree kits in ten days.",
+            "ACME SYSTEMS / NEXT STEPS\nRequired to start\nWe begin when we receive these items.",
+            "ACME SYSTEMS / COMPLIANCE\nRFP requirements\nHow we meet each one."])
+        r = tells.run(deck)
+        self.assertNotIn("stack", families(r))
+
+    def test_distinct_stack_is_quiet(self):
+        r = tells.run("ACME / COMMERCIALS\nScope, fee and schedule\nThree kits in 10 business days, at one fixed price.\n")
+        self.assertNotIn("stack", families(r))
+
+    def test_regressions_from_a_real_deck_are_flagged(self):
+        # Both shapes slipped past a polish pass on a client deck (anonymised).
+        for stack, word in [("ACME / COMMERCIALS\nScope, fee and schedule\nThree kits in 10 business days, for one fixed fee.\n", "fee"),
+                            ("ACME / NEXT STEPS\nRequired to start\nWork starts when the studio receives these items.\n", "start")]:
+            hits = [f for f in tells.run(stack)["findings"] if f["family"] == "stack"]
+            self.assertEqual(len(hits), 1, stack)
+            self.assertIn(word, hits[0]["note"])
+
+    def test_prose_paragraphs_are_not_stacks(self):
+        r = tells.run("We built the first version of this tool over a long winter and learned a great deal about it along the way.\nThe tool now ships to every team.\n")
+        self.assertNotIn("stack", families(r))
+
+    def test_card_figure_then_list_not_flagged(self):
+        r = tells.run("SCHEDULE\nDAY 10\nCheck-in, day 2: Kit A direction.\nCheck-in, day 5: system and layouts.\n")
+        self.assertNotIn("stack", families(r))
+
+    def test_label_then_list_items_not_flagged(self):
+        r = tells.run("PROGRAM\nOne system for 15+ shows a year.\nKit B is ready for the late-January show.\n")
+        self.assertNotIn("stack", families(r))
+
+    def test_allow_list_suppresses_brand_word(self):
+        r = tells.run("Acme approach\nWhy Acme builds kits\n", allow=["acme"])
+        self.assertNotIn("stack", families(r))
+
+
 if __name__ == "__main__":
     unittest.main()
+

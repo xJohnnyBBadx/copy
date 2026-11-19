@@ -374,6 +374,89 @@ def brand_lists(brand_text):
     return sorted(set(avoid)), sorted(set(a for a in allow if a))
 
 
+
+# Heading stacks: an eyebrow, title and subtitle stacked at the top of a block
+# (a slide, a card, a section) should each add something. The sentence-level
+# checks above cannot see a word repeated across those stacked lines.
+STACK_STOP = SMALL_WORDS | {
+    "our", "we", "you", "your", "us", "it", "its", "this", "that", "these", "those",
+    "be", "are", "was", "were", "will", "can", "all", "each", "every", "one", "two",
+    "three", "new", "from", "into", "out", "up", "how", "what", "who", "why", "when",
+    "after", "before", "per", "not", "no", "yes", "has", "have", "had", "do", "does",
+}
+
+
+def _stack_tokens(line):
+    toks = set()
+    for w in WORD_RE.findall(line):
+        w = w.lower().replace("’", "'")
+        if w.endswith("'s"):
+            w = w[:-2]
+        if len(w) < 3 or w in STACK_STOP or w.isdigit():
+            continue
+        if len(w) > 4 and w.endswith("s") and not w.endswith("ss"):
+            w = w[:-1]
+        toks.add(w)
+    return toks
+
+
+def scan_stacks(text, allow):
+    """Flag a content word repeated across the first three lines of a block."""
+    findings = []
+    blocks = []
+    for m in re.finditer(r"(?:^|\n\s*\n)([^\n].*?)(?=\n\s*\n|\Z)", text, flags=re.S):
+        start = m.start(1)
+        lines = []
+        offset = start
+        for raw in m.group(1).split("\n"):
+            if raw.strip():
+                clean = re.sub(r"^\s*(?:#{1,6}\s+|[-*+]\s+|\d+[.)]\s+)", "", raw).strip()
+                lines.append((clean, offset))
+            offset += len(raw) + 1
+        if len(lines) >= 2:
+            blocks.append((lines[:3], len(lines)))
+    if not blocks:
+        return findings
+    # Section prefixes repeated on the first line of most blocks are boilerplate.
+    first_counts = {}
+    for b, _ in blocks:
+        for t in _stack_tokens(b[0][0]):
+            first_counts[t] = first_counts.get(t, 0) + 1
+    boiler = {t for t, c in first_counts.items() if len(blocks) >= 3 and c >= max(3, len(blocks) * 0.5)}
+    allowed = {a.lower() for a in allow} | boiler
+    names = ["eyebrow", "title", "subtitle"]
+    def heading_like(line):
+        return len(WORD_RE.findall(line)) <= 8 and not line.rstrip().endswith((".", "!", "?", ";", ":"))
+
+    for b, full_len in blocks:
+        # A stack is a short heading line followed by a second heading-like line
+        # (eyebrow + title). A label followed by list items or a sentence is not a stack.
+        if len(WORD_RE.findall(b[0][0])) > 10 or not heading_like(b[1][0]):
+            continue
+        # In longer blocks the third line is usually the first list item or body
+        # sentence; count it only when it is heading-like too.
+        if len(b) == 3 and full_len > 3 and not heading_like(b[2][0]):
+            b = b[:2]
+        toks = [_stack_tokens(line) - allowed for line, _ in b]
+        repeats = []
+        for i in range(len(b)):
+            for j in range(i + 1, len(b)):
+                for w in sorted(toks[i] & toks[j]):
+                    repeats.append((w, names[i], names[j]))
+        if not repeats:
+            continue
+        seen = []
+        for w, a, c in repeats:
+            if w not in [x[0] for x in seen]:
+                seen.append((w, a, c))
+        line_no, col = line_col(text, b[0][1])
+        detail = "; ".join("'%s' in %s and %s" % s for s in seen)
+        stack = " | ".join(line for line, _ in b)
+        findings.append({"family": "stack", "match": seen[0][0], "line": line_no, "col": col,
+                         "start": b[0][1], "end": b[0][1] + len(b[0][0]),
+                         "excerpt": stack, "note": "heading stack repeats " + detail})
+    return findings
+
 def run(text, context=None, avoid=None, allow=None):
     text = normalize(text)
     allow = [a.strip().lower() for a in (allow or []) if a.strip()]
@@ -388,6 +471,7 @@ def run(text, context=None, avoid=None, allow=None):
     findings = scan_phrases(text, families, allow)
     metrics, metric_findings = scan_metrics(text)
     findings.extend(metric_findings)
+    findings.extend(scan_stacks(text, allow))
 
     suppress = CONTEXT_SUPPRESS.get(str(context), set()) if context else set()
     active = [f for f in findings if f["family"] not in suppress]

@@ -90,6 +90,13 @@ Title Case on every heading when the house style is sentence case; bold-label bu
 - **Em dashes:** never ban them. Flag only density (the linter reports dashes per 100 words) or when every sentence pivots on one. Long-form, editorial, and many brand voices use them well.
 - **Don't flag:** formatting that matches BRAND.md or the publication's style.
 
+### `stack` · Heading-stack repetition
+The first lines of a block (a slide, card, or section) often stack an eyebrow, a title, and a subtitle. The linter flags a content word that appears in more than one of those first three lines, for example "SCOPE / FEE / SCHEDULE" above "Scope, fee and schedule" above "One fixed fee…". Sentence-level checks can't see this, because each line is fine on its own. Words that open most blocks (a recurring "ACME / SECTION" prefix) count as boilerplate and are ignored. Pass brand names with `--allow`.
+- **Flag:** an eyebrow that repeats the title; a subtitle that restates the title instead of giving the bottom line.
+- **Don't flag:** a deliberate repeat that builds (a series name carried across slides); a product name that has to appear in both lines.
+- **Fix:** give each line one job. The eyebrow says where the reader is, the title says what the block is, and the subtitle gives the bottom line.
+- **Input:** keep the structure when you feed the linter. Put one block per slide or card, separated by blank lines, with the eyebrow, title and subtitle on their own lines. A flattened paragraph hides the stack.
+
 ### Manual-only: synonym cycling
 Calling the same thing three names ("the platform… the solution… the tool"). The linter can't see it; read for it. Especially damaging in technical, investor, and product writing, where readers assume a new word means a new thing.
 - **Fix:** pick one term and keep it.
